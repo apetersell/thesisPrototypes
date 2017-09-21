@@ -81,6 +81,9 @@ public class Arrow : MonoBehaviour {
 			}
 		}
 
+		if (placement.x < 0) {
+			GetComponent<SpriteRenderer> ().flipY = true;
+		} 
 
 //		if (pointDirection == Vector3.zero) {
 //			sr.color = alphadOut;
