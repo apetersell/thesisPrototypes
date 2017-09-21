@@ -7,6 +7,7 @@ public class Arrow : MonoBehaviour {
 	public Vector2 placement;
 	public int owner; 
 	public bool fusionIndicator;
+	public Vector2 offset;
 	SoloPlayers sp;
 	FusionPlayer fp;
 	SpriteRenderer sr;
@@ -47,7 +48,7 @@ public class Arrow : MonoBehaviour {
 				float angle = Mathf.Atan2(pointDirection.y, pointDirection.x) * Mathf.Rad2Deg;
 				transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 			}
-			placement = new Vector2 (Input.GetAxis ("LeftStickX_P" + owner), Input.GetAxis ("LeftStickY_P" + owner) * -1).normalized; 
+			placement = new Vector2 (Input.GetAxis ("LeftStickX_P" + owner) + offset.x, (Input.GetAxis ("LeftStickY_P" + owner) * -1) + offset.y).normalized; 
 
 			if (sp != null) {
 				if (sp.touchingGround == true) {
@@ -81,9 +82,9 @@ public class Arrow : MonoBehaviour {
 		}
 
 
-		if (pointDirection == Vector3.zero) {
-			sr.color = alphadOut;
-		} else {
+//		if (pointDirection == Vector3.zero) {
+//			sr.color = alphadOut;
+//		} else {
 			if (overlapping) {
 				sr.color = fusionColor;
 			} else {
@@ -97,7 +98,7 @@ public class Arrow : MonoBehaviour {
 					sr.color = fusionColor;
 				}
 			}
-		}
+//		}
 
 	}
 
