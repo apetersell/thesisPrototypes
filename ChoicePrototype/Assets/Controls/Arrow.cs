@@ -81,7 +81,7 @@ public class Arrow : MonoBehaviour {
 			}
 		}
 
-		if (placement.x < 0) {
+		if (placement.x < 0 || placement.x > 0) {
 			GetComponent<SpriteRenderer> ().flipY = true;
 		} 
 
