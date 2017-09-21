@@ -7,6 +7,7 @@ public class FusionPlayer : MonoBehaviour {
 	SpriteRenderer sr;
 	Rigidbody2D rb;
 
+	public bool keyBoard;
 	public int playerNum;
 	public float HP;
 
@@ -67,15 +68,35 @@ public class FusionPlayer : MonoBehaviour {
 
 	public bool readyToFuse; 
 
+	string player1MovementX;
+	string player2MovementX;
+	string player1MovementY;
+	string player2MovementY;
+
 
 	// Use this for initialization
 	void Start () {
 		sr = GetComponent<SpriteRenderer> ();
 		rb = GetComponent<Rigidbody2D> ();
+
 	}
 
 	// Update is called once per frame
 	void Update () {
+
+		if (keyBoard) {
+			player1MovementX = "Horizontal_P1";
+			player1MovementY = "Vertical_P1";
+			player2MovementX = "Horizontal_P2";
+			player2MovementY = "Vertical_P2";
+		} else 
+		{
+			player1MovementX = "LeftStickX_P1";
+			player1MovementY = "LeftStickY_P1";
+			player2MovementX = "LeftStickX_P2"; 
+			player2MovementY = "LeftStickY_P2";
+		}
+
 		if (actionable) 
 		{
 			actions ();
@@ -453,10 +474,10 @@ public class FusionPlayer : MonoBehaviour {
 	void handleDualInputs()
 	{
 
-		player1StickX = Input.GetAxis ("LeftStickX_P1");
-		player1StickY = Input.GetAxis ("LeftStickY_P1");
-		player2StickX = Input.GetAxis ("LeftStickX_P2"); 
-		player2StickY = Input.GetAxis ("LeftStickY_P2");
+		player1StickX = Input.GetAxis (player1MovementX);
+		player1StickY = Input.GetAxis (player1MovementY);
+		player2StickX = Input.GetAxis (player2MovementX); 
+		player2StickY = Input.GetAxis (player2MovementY);
 
 		moddedMoveSpeed = moveSpeed * moveSpeedModifier;
 

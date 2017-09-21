@@ -19,6 +19,11 @@ public class Arrow : MonoBehaviour {
 	bool noInput;
 	Vector3 pointDirection;
 
+	public bool keyBoard;
+	string movementX;
+	string movementY;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +32,8 @@ public class Arrow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		altControl ();
 
 		if (Input.GetAxis ("LeftStickX_P" + owner) == 0 && Input.GetAxis ("LeftStickY_P" + owner) == 0) {
 			noInput = true;
@@ -42,13 +49,13 @@ public class Arrow : MonoBehaviour {
 
 		if (fusionIndicator == false) 
 		{
-			pointDirection = new Vector3 ((Input.GetAxis ("LeftStickX_P" + owner)), (Input.GetAxis ("LeftStickY_P" + owner)) * -1, 0);  
+			pointDirection = new Vector3 ((Input.GetAxis (movementX)), (Input.GetAxis (movementY)) * -1, 0);  
 			if (pointDirection != Vector3.zero) 
 			{
 				float angle = Mathf.Atan2(pointDirection.y, pointDirection.x) * Mathf.Rad2Deg;
 				transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 			}
-			placement = new Vector2 (Input.GetAxis ("LeftStickX_P" + owner) + offset.x, (Input.GetAxis ("LeftStickY_P" + owner) * -1) + offset.y).normalized; 
+			placement = new Vector2 (Input.GetAxis (movementX) + offset.x, (Input.GetAxis (movementY) * -1) + offset.y).normalized; 
 
 			if (sp != null) {
 				if (sp.touchingGround == true) {
@@ -127,5 +134,24 @@ public class Arrow : MonoBehaviour {
 				fp.overlapping = false;
 			}
 		}
+	}
+
+	void altControl()
+	{
+		FusionPlayer fp = GetComponentInParent<FusionPlayer> ();
+		if (fp.keyBoard) {
+			keyBoard = true;
+		} else {
+			keyBoard = false;
+		}
+		if (keyBoard) {
+			movementX = "Horizontal_P" +owner; 
+			movementY = "Vertical_P" + owner;
+		} else 
+		{
+			movementX = "LeftStickX_P" + owner;
+			movementY = "LeftStickY_P" + owner;
+		}
+
 	}
 }
