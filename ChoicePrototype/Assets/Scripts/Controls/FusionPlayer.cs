@@ -150,7 +150,7 @@ public class FusionPlayer : MonoBehaviour {
 		}
 
 		//Jumping
-		if (Input.GetButtonDown ("AButton_P1")) 
+		if (Input.GetAxis ("LeftStickY_P1") == -1) 
 		{
 			if (touchingGround) 
 			{
@@ -163,7 +163,7 @@ public class FusionPlayer : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetButtonDown ("AButton_P2")) 
+		if (Input.GetAxis ("LeftStickY_P2") == -1) 
 		{
 			if (touchingGround) 
 			{
@@ -176,7 +176,7 @@ public class FusionPlayer : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetButtonDown ("AButton_P1") && Input.GetButton ("AButton_P2")) 
+		if (Input.GetAxis ("LeftStickY_P1") == -1 && Input.GetAxis ("LeftStickY_P2") == -1)   
 		{
 			if (touchingGround) {
 				jump (jumpSpeed * 1.5f);
@@ -200,7 +200,7 @@ public class FusionPlayer : MonoBehaviour {
 
 		//Projectile Attack
 		if (overlapping == false) {
-			if (Input.GetButtonDown ("BButton_P1")) {
+			if (Input.GetAxis ("RTrigger_P1") == 1)  {
 				if (p1CanShoot) {
 					float modX = player1StickX;
 					float modY = player1StickY * -1;
@@ -224,7 +224,7 @@ public class FusionPlayer : MonoBehaviour {
 
 			}
 
-			if (Input.GetButtonDown ("BButton_P2")) {
+			if (Input.GetAxis ("RTrigger_P2") == 1)  {
 				if (p2CanShoot) {
 					float modX = player2StickX;
 					float modY = player2StickY * -1;
@@ -248,7 +248,7 @@ public class FusionPlayer : MonoBehaviour {
 
 			}
 		} else {
-			if (Input.GetButtonDown ("BButton_P1") || Input.GetButtonDown ("BButton_P2")) 
+			if (Input.GetAxis ("RTrigger_P1") == 1 || (Input.GetAxis ("RTrigger_P2") == 1)) 
 			{
 				if (fusionCanShoot) 
 				{
