@@ -215,7 +215,7 @@ public class FusionPlayer : MonoBehaviour {
 					Vector3 direction = new Vector3 (modX, modY, 0).normalized;
 					beam = Instantiate (Resources.Load ("Prefabs/Projectiles/SoloBeamPrefab")) as GameObject;
 					beam.GetComponent<Beams> ().modPos = new Vector3 (modX, modY, 0).normalized;
-					beam.transform.position = transform.position + beam.GetComponent<Beams> ().modPos;
+					//beam.transform.position = transform.position + beam.GetComponent<Beams> ().modPos;
 					beam.GetComponent<Beams> ().owner = 1;
 					beam.GetComponent<Beams> ().dir = direction;
 					beam.GetComponent<SpriteRenderer> ().color = player1Color;
@@ -239,7 +239,7 @@ public class FusionPlayer : MonoBehaviour {
 					Vector3 direction = new Vector3 (modX, modY, 0).normalized;
 					beam = Instantiate (Resources.Load ("Prefabs/Projectiles/SoloBeamPrefab")) as GameObject;
 					beam.GetComponent<Beams> ().modPos = new Vector3 (modX, modY, 0).normalized;
-					beam.transform.position = transform.position + beam.GetComponent<Beams> ().modPos;
+					//beam.transform.position = transform.position + beam.GetComponent<Beams> ().modPos;
 					beam.GetComponent<Beams> ().owner = 2;
 					beam.GetComponent<Beams> ().dir = direction;
 					beam.GetComponent<SpriteRenderer> ().color = player2Color;
@@ -265,7 +265,7 @@ public class FusionPlayer : MonoBehaviour {
 					Vector3 direction = new Vector3 (modX, modY, 0).normalized;
 					beam = Instantiate (Resources.Load ("Prefabs/Projectiles/SoloBeamPrefab")) as GameObject;
 					beam.GetComponent<Beams> ().modPos = new Vector3 (modX, modY, 0).normalized;
-					beam.transform.position = transform.position + beam.GetComponent<Beams> ().modPos;
+					//beam.transform.position = transform.position + beam.GetComponent<Beams> ().modPos;
 					beam.GetComponent<Beams> ().owner = 3;
 					beam.GetComponent<Beams> ().dir = direction;
 					beam.GetComponent<SpriteRenderer> ().color = defaultColor;
