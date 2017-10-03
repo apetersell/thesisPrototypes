@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Beams : MonoBehaviour {
 
 	public int owner;
+	public float damage;
 	public float XSpeed; // How fast the projectile moves horizontally.
 	public float YSpeed; // How fast the projectiel moves vertically.
 	public Vector2 dir;  // What direction does it move in.
@@ -78,5 +79,6 @@ public abstract class Beams : MonoBehaviour {
 	public virtual void hitPlayer (SoloPlayers p)
 	{
 		killProjectile ();
+		p.takeDamage (damage);
 	}
 }

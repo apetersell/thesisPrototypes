@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: 0
+  damage: 25
   XSpeed: 16
   YSpeed: 16
   dir: {x: 0, y: 0}
@@ -148,5 +149,5 @@ SpriteRenderer:
   m_Size: {x: 3.38, y: 5.08}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0

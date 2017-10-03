@@ -20,9 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4160720064693026}
   - component: {fileID: 212532621008783964}
-  - component: {fileID: 114620212453768824}
   - component: {fileID: 61099078190095794}
   - component: {fileID: 50179560834597002}
+  - component: {fileID: 114863760242430960}
   m_Layer: 0
   m_Name: P2Arrow (F)
   m_TagString: Arrow
@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 50294299674463366}
   - component: {fileID: 61005354112096614}
   - component: {fileID: 114699751324952242}
+  - component: {fileID: 114695025970345830}
   m_Layer: 13
   m_Name: FusionPlayer
   m_TagString: Fusion
@@ -75,9 +76,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4799640120855518}
   - component: {fileID: 212535236614370746}
-  - component: {fileID: 114796315441132352}
   - component: {fileID: 61497375011984800}
   - component: {fileID: 50219336252524898}
+  - component: {fileID: 114768065973386718}
   m_Layer: 0
   m_Name: P1Arrow (F)
   m_TagString: Arrow
@@ -131,7 +132,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1604027575111650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.31, y: -2.83, z: 0}
+  m_LocalPosition: {x: 5.4031806, y: -3.016894, z: 0}
   m_LocalScale: {x: 0.3894165, y: 0.3894165, z: 0.3894165}
   m_Children:
   - {fileID: 4799640120855518}
@@ -275,25 +276,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.2553687, y: 2.155921}
   m_EdgeRadius: 0
---- !u!114 &114620212453768824
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1107212597429900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81841b218f9c4471988b08eea3e611a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placement: {x: 0, y: 0}
-  owner: 2
-  fusionIndicator: 0
-  p1Color: {r: 0.44117647, g: 0.53752536, b: 1, a: 1}
-  p2Color: {r: 1, g: 0.27205884, b: 0.27205884, a: 1}
-  fusionColor: {r: 0.80172426, g: 0.113970585, b: 0.9117647, a: 1}
-  alphadOut: {r: 0, g: 0, b: 0, a: 0}
---- !u!114 &114699751324952242
+--- !u!114 &114695025970345830
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -301,9 +284,80 @@ MonoBehaviour:
   m_GameObject: {fileID: 1604027575111650}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45cdde71fa9744e98a0a7299b0d79709, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyBoard: 0
+  playerNum: 3
+  HP: 100
+  stickPlacement: 0
+  player1StickX: 0
+  player1StickY: 0
+  player2StickX: 0
+  player2StickY: 0
+  stickPosX: 0
+  stickPosY: 0
+  moveSpeedBonus: 2
+  moveSpeedModifier: 0
+  moddedMoveSpeed: 0
+  moveSpeed: 6
+  airSpeedModifier: 1.5
+  jumpSpeed: 30
+  normalGrav: 5
+  gravBonus: 1.2
+  gravModifier: 0
+  fastFallGrav: 12
+  gravityThreshold: 0.5
+  directionModifier: 1
+  player1maxAirActions: 1
+  player2maxAirActions: 1
+  player1airActions: 1
+  player2airActions: 1
+  touchingGround: 1
+  actionable: 1
+  affectedByGrav: 1
+  touchingWall: 0
+  stopRightMomentum: 0
+  stopLeftMomentum: 0
+  passThroughPlatforms: 0
+  p1CanShoot: 1
+  p2CanShoot: 1
+  fusionCanShoot: 1
+  p1CurrentShotDelay: 30
+  p2CurrentShotDelay: 30
+  fusionCurrenShotDelay: 30
+  p1ShotDelay: 30
+  p2ShotDelay: 30
+  fusionShotDelay: 30
+  overlapping: 0
+  p1TryingToUnfuse: 0
+  p2TryingToUnfuse: 0
+  separationCountDown: 60
+  player1Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  player2Color: {r: 1, g: 0.19852942, b: 0.19852942, a: 1}
+  fusionColor: {r: 0.8400607, g: 0.3897059, b: 1, a: 1}
+  p1GetOut: {r: 0, g: 0, b: 0, a: 0}
+  p2GetOut: {r: 0, g: 0, b: 0, a: 0}
+  p1ToP2: {r: 0, g: 0, b: 0, a: 0}
+  lerpSpeed: 5
+  readyToFuse: 0
+  player1InControl: 0
+  player2InControl: 0
+  bothInControl: 0
+  noInputP1: 0
+  noInputP2: 0
+--- !u!114 &114699751324952242
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1604027575111650}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9374e606afbd842fda82c375bbb57f0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keyBoard: 0
   playerNum: 3
   HP: 100
   stickPlacement: 0
@@ -371,11 +425,13 @@ MonoBehaviour:
   placement: {x: 0, y: 0}
   owner: 0
   fusionIndicator: 1
+  offset: {x: 0, y: 0}
   p1Color: {r: 0.44117647, g: 0.53752536, b: 1, a: 1}
   p2Color: {r: 1, g: 0.27205884, b: 0.27205884, a: 1}
   fusionColor: {r: 0, g: 1, b: 0.21379304, a: 1}
   alphadOut: {r: 0, g: 0, b: 0, a: 0}
---- !u!114 &114796315441132352
+  keyBoard: 0
+--- !u!114 &114768065973386718
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -383,16 +439,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 1682487099791988}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81841b218f9c4471988b08eea3e611a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c66d8fb14b884b50a21c6e61b7ccf5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   placement: {x: 0, y: 0}
   owner: 1
   fusionIndicator: 0
-  p1Color: {r: 0.44117647, g: 0.53752536, b: 1, a: 1}
-  p2Color: {r: 1, g: 0.27205884, b: 0.27205884, a: 1}
-  fusionColor: {r: 0.80172426, g: 0.113970585, b: 0.9117647, a: 1}
+  p1Color: {r: 0.38164294, g: 0.33088237, b: 1, a: 1}
+  p2Color: {r: 1, g: 0.32352942, b: 0.32352942, a: 1}
+  fusionColor: {r: 0.8588235, g: 0.3602941, b: 1, a: 1}
   alphadOut: {r: 0, g: 0, b: 0, a: 0}
+  keyBoard: 0
+--- !u!114 &114863760242430960
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1107212597429900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c66d8fb14b884b50a21c6e61b7ccf5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placement: {x: 0, y: 0}
+  owner: 2
+  fusionIndicator: 0
+  p1Color: {r: 0.38164294, g: 0.33088237, b: 1, a: 1}
+  p2Color: {r: 1, g: 0.32352942, b: 0.32352942, a: 1}
+  fusionColor: {r: 0.8588235, g: 0.3602941, b: 1, a: 1}
+  alphadOut: {r: 0, g: 0, b: 0, a: 0}
+  keyBoard: 0
 --- !u!212 &212269090650898928
 SpriteRenderer:
   m_ObjectHideFlags: 1

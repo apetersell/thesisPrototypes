@@ -1,18 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class SoloPlayers : MonoBehaviour {
+public class NetworkPlayer : NetworkBehaviour {
 
 	SpriteRenderer sr;
 	Rigidbody2D rb;
 
 	public int playerNum;
 	public float HP;
-	public float maxHP;
-	public bool recovering = true;
-	public float hitDuration;
-	public float maxHitDuration;
 	public float moveSpeed;
 	public float airSpeedModifier;
 	public float jumpSpeed;
@@ -33,14 +30,11 @@ public class SoloPlayers : MonoBehaviour {
 	public float currentShotDelay; 
 	public float shotDelay;
 	public Color defaultColor;
-	public Color otherColor;
 	public Color fusionColor;
 	public Color lerpingColor;
-	public Color forcedFusionLerp;
 	public float lerpSpeed;
 
 	public bool readyToFuse; 
-	public bool incapacitated;
 
 
 	// Use this for initialization
@@ -48,20 +42,30 @@ public class SoloPlayers : MonoBehaviour {
 		sr = GetComponent<SpriteRenderer> ();
 		rb = GetComponent<Rigidbody2D> ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
-		if (actionable) 
-		{
-			actions ();
+		if (!isLocalPlayer) {
+
+			return;
 		}
-			
-		movementSmoothing (); 
-		handleShotDelay (); 
-		handleColors ();
-		handleHP ();
-		
+
+			if (actionable) {
+				actions ();
+			}
+
+			movementSmoothing (); 
+			handleShotDelay (); 
+
+//			if (readyToFuse) {
+//				sr.color = lerpingColor;
+//			} else {
+//				sr.color = defaultColor;
+//			}
+//
+//			lerpingColor = Color.Lerp (defaultColor, fusionColor, Mathf.PingPong (Time.time * lerpSpeed, 1));
+
 	}
 
 	void actions ()
@@ -152,18 +156,15 @@ public class SoloPlayers : MonoBehaviour {
 
 		}
 
-		//Getting Ready to Fuse
-		if (Input.GetAxis ("RTrigger_P" + playerNum) == 1) 
-		{
-			readyToFuse = true;	
-		} 
-		else 
-		{
-			if (incapacitated == false) 
-			{
-				readyToFuse = false;
-			}
-		}
+//		//Putting up Shield
+//		if (Input.GetAxis ("RTrigger_P" + playerNum) == 1) 
+//		{
+//			readyToFuse = true;	
+//		} 
+//		else 
+//		{
+//			readyToFuse = false;
+//		}
 
 
 
@@ -186,33 +187,19 @@ public class SoloPlayers : MonoBehaviour {
 			touchingWall = true;
 		}
 
-		if (coll.gameObject.tag == "Player") 
-		{
-			SoloPlayers other = coll.gameObject.GetComponent<SoloPlayers> ();
-			if (readyToFuse == true && other.readyToFuse == true) {
-				if (incapacitated == false) {
-					if (other.incapacitated == false) {
-						this.gameObject.SetActive (false);
-						coll.gameObject.SetActive (false);
-						GameManager gm = GameObject.Find ("GameManager").GetComponent<GameManager> ();
-						gm.IYHcreateFusion (transform.position, "Both");
-					} else {
-						this.gameObject.SetActive (false);
-						coll.gameObject.SetActive (false);
-						GameManager gm = GameObject.Find ("GameManager").GetComponent<GameManager> ();
-						gm.IYHcreateFusion (transform.position, this.gameObject.name);
-					}
-				}
-			}
-		}
+//		if (coll.gameObject.tag == "Player") 
+//		{
+//			SoloPlayers other = coll.gameObject.GetComponent<SoloPlayers> ();
+//			if (readyToFuse == true && other.readyToFuse == true) 
+//			{
+//				this.gameObject.SetActive (false);
+//				coll.gameObject.SetActive (false);
+//				GameManager gm = GameObject.Find ("GameManager").GetComponent<GameManager> ();
+//				gm.createFusion (transform.position);
+//			}
+//		}
 	}
 
-	public void takeDamage (float damage)
-	{
-		HP = HP - damage; 
-		hitDuration = 0;
-		recovering = false;
-	}
 
 	void OnCollisionExit2D (Collision2D coll)
 	{
@@ -291,60 +278,6 @@ public class SoloPlayers : MonoBehaviour {
 				Physics2D.IgnoreLayerCollision (9, 11, false);
 			}
 		}
-	}
-
-	void handleHP()
-	{
-		if (HP < 0) 
-		{
-			HP = 0;
-		}
-		if (HP > maxHP) 
-		{
-			HP = maxHP;
-		}
-		if (HP == 0) 
-		{
-			incapacitated = true;
-		}
-		if (incapacitated) 
-		{
-			readyToFuse = true;
-			recovering = false;
-			actionable = false;
-
-		}
-
-		if (recovering) {
-			HP = HP + 0.5f;
-		} 
-		else 
-		{
-			hitDuration++;
-		}
-
-		if (hitDuration >= maxHitDuration) 
-		{
-			hitDuration = maxHitDuration;
-			recovering = true;
-		}
-			
-	}
-
-	void handleColors()
-	{
-		if (readyToFuse) {
-			if (incapacitated) {
-				sr.color = forcedFusionLerp;
-			} else {
-				sr.color = lerpingColor;
-			}
-		} else {
-			sr.color = defaultColor;
-		}
-
-		lerpingColor = Color.Lerp(defaultColor, fusionColor, Mathf.PingPong(Time.time*lerpSpeed, 1));
-		forcedFusionLerp = Color.Lerp (otherColor, fusionColor, Mathf.PingPong (Time.time * lerpSpeed, 1));
 	}
 
 }

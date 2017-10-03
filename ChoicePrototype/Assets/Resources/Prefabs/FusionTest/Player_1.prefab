@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4970374047511530}
   - component: {fileID: 212652265221623214}
-  - component: {fileID: 114575227572517868}
+  - component: {fileID: 114358339101553406}
   m_Layer: 0
   m_Name: P1Arrow
   m_TagString: Untagged
@@ -69,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1333209021417668}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.747, y: -0.010999918, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.044115227, y: 0.044115227, z: 0.044115227}
   m_Children: []
   m_Father: {fileID: 4162657876000660}
@@ -85,7 +85,7 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
+  m_UseAutoMass: 1
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
@@ -129,7 +129,7 @@ Animator:
   m_GameObject: {fileID: 1159605946343722}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8f4008cef43aa424f986fc44808f1da7, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -137,6 +137,25 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114358339101553406
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1333209021417668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c66d8fb14b884b50a21c6e61b7ccf5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placement: {x: 0, y: 0}
+  owner: 1
+  fusionIndicator: 0
+  p1Color: {r: 0.38164294, g: 0.33088237, b: 1, a: 1}
+  p2Color: {r: 1, g: 0.32352942, b: 0.32352942, a: 1}
+  fusionColor: {r: 0.8588235, g: 0.3602941, b: 1, a: 1}
+  alphadOut: {r: 0, g: 0, b: 0, a: 0}
+  keyBoard: 0
 --- !u!114 &114527192680920616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -174,24 +193,7 @@ MonoBehaviour:
   lerpingColor: {r: 0, g: 0, b: 0, a: 0}
   lerpSpeed: 5
   readyToFuse: 0
---- !u!114 &114575227572517868
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1333209021417668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81841b218f9c4471988b08eea3e611a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placement: {x: 0, y: 0}
-  owner: 1
-  fusionIndicator: 0
-  p1Color: {r: 0.44117647, g: 0.53752536, b: 1, a: 1}
-  p2Color: {r: 1, g: 0.27205884, b: 0.27205884, a: 1}
-  fusionColor: {r: 0.80172426, g: 0.113970585, b: 0.9117647, a: 1}
-  alphadOut: {r: 0, g: 0, b: 0, a: 0}
+  incapacitated: 0
 --- !u!212 &212652265221623214
 SpriteRenderer:
   m_ObjectHideFlags: 1

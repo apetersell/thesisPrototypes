@@ -112,11 +112,6 @@ public class FusionPlayer : MonoBehaviour {
 		} else {
 			sr.color = defaultColor;
 		}
-
-		blueLerp = Color.Lerp(player1Color, defaultColor, Mathf.PingPong(Time.time*lerpSpeed, 1));
-		redLerp = Color.Lerp (player2Color, defaultColor, Mathf.PingPong (Time.time * lerpSpeed, 1));
-		blueToRed = Color.Lerp (player1Color, player2Color, Mathf.PingPong (Time.time * lerpSpeed, 1));
-
 	}
 
 	void actions ()
@@ -150,7 +145,7 @@ public class FusionPlayer : MonoBehaviour {
 		}
 
 		//Jumping
-		if (Input.GetAxis ("LeftStickY_P1") == -1) 
+		if (Input.GetButtonDown ("AButton_P1")) 
 		{
 			if (touchingGround) 
 			{
@@ -163,7 +158,7 @@ public class FusionPlayer : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetAxis ("LeftStickY_P2") == -1) 
+		if (Input.GetButtonDown ("AButton_P2")) 
 		{
 			if (touchingGround) 
 			{
@@ -176,7 +171,8 @@ public class FusionPlayer : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetAxis ("LeftStickY_P1") == -1 && Input.GetAxis ("LeftStickY_P2") == -1)   
+		//Super Jump
+		if (Input.GetButtonDown ("AButton_P1") && Input.GetButtonDown ("AButton_P2"))   
 		{
 			if (touchingGround) {
 				jump (jumpSpeed * 1.5f);
@@ -208,14 +204,14 @@ public class FusionPlayer : MonoBehaviour {
 					if (modX == 0 && modY == 0) {
 						modX = directionModifier;
 					}
-//					if (modY < 0 && touchingGround == true) {
-//						modX = directionModifier;
-//						modY = 0;
-//					}
+					if (modY < 0 && touchingGround == true) {
+						modX = directionModifier;
+						modY = 0;
+					}
 					Vector3 direction = new Vector3 (modX, modY, 0).normalized;
 					beam = Instantiate (Resources.Load ("Prefabs/Projectiles/SoloBeamPrefab")) as GameObject;
 					beam.GetComponent<Beams> ().modPos = new Vector3 (modX, modY, 0).normalized;
-					//beam.transform.position = transform.position + beam.GetComponent<Beams> ().modPos;
+					beam.transform.position = transform.position + beam.GetComponent<Beams> ().modPos;
 					beam.GetComponent<Beams> ().owner = 1;
 					beam.GetComponent<Beams> ().dir = direction;
 					beam.GetComponent<SpriteRenderer> ().color = player1Color;
@@ -232,14 +228,14 @@ public class FusionPlayer : MonoBehaviour {
 					if (modX == 0 && modY == 0) {
 						modX = directionModifier;
 					}
-//					if (modY < 0 && touchingGround == true) {
-//						modX = directionModifier;
-//						modY = 0;
-//					}
+					if (modY < 0 && touchingGround == true) {
+						modX = directionModifier;
+						modY = 0;
+					}
 					Vector3 direction = new Vector3 (modX, modY, 0).normalized;
 					beam = Instantiate (Resources.Load ("Prefabs/Projectiles/SoloBeamPrefab")) as GameObject;
 					beam.GetComponent<Beams> ().modPos = new Vector3 (modX, modY, 0).normalized;
-					//beam.transform.position = transform.position + beam.GetComponent<Beams> ().modPos;
+					beam.transform.position = transform.position + beam.GetComponent<Beams> ().modPos;
 					beam.GetComponent<Beams> ().owner = 2;
 					beam.GetComponent<Beams> ().dir = direction;
 					beam.GetComponent<SpriteRenderer> ().color = player2Color;
@@ -497,6 +493,9 @@ public class FusionPlayer : MonoBehaviour {
 	{
 		if (p1TryingToUnfuse == true && p2TryingToUnfuse == false) {
 			sr.color = blueLerp;
+			blueLerp = Color.Lerp(player1Color, defaultColor, Mathf.PingPong(Time.time*lerpSpeed, 1));
+			redLerp = Color.Lerp (player2Color, defaultColor, Mathf.PingPong (Time.time * lerpSpeed, 1));
+			blueToRed = Color.Lerp (player1Color, player2Color, Mathf.PingPong (Time.time * lerpSpeed, 1));
 		} 
 
 	}
