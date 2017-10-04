@@ -11,7 +11,9 @@ public class IYHFusionPlayer : MonoBehaviour {
 	public int playerNum;
 	public float HP;
 
-
+	public Sprite p1Sprite;
+	public Sprite p2Sprite;
+	public Sprite harmonySprite;
 	public float stickPlacement;
 	public float player1StickX;
 	public float player1StickY; 
@@ -50,14 +52,13 @@ public class IYHFusionPlayer : MonoBehaviour {
 	public bool fusionCanShoot = true; 
 	public float p1CurrentShotDelay; 
 	public float p2CurrentShotDelay;
-	public float fusionCurrenShotDelay; 
 	public float p1ShotDelay;
 	public float p2ShotDelay;
-	public float fusionShotDelay;
 	public bool overlapping;
 	public bool p1TryingToUnfuse;
 	public bool p2TryingToUnfuse;
 	public float separationCountDown;
+	public float maxSeparationCountDown;
 	public Color player1Color;
 	public Color player2Color;
 	public Color fusionColor; 
@@ -69,7 +70,6 @@ public class IYHFusionPlayer : MonoBehaviour {
 	public bool readyToFuse; 
 	public bool player1InControl;
 	public bool player2InControl;
-	public bool bothInControl;
 
 	string player1MovementX;
 	string player2MovementX;
@@ -136,6 +136,7 @@ public class IYHFusionPlayer : MonoBehaviour {
 
 	void player1Inputs()
 	{
+
 		//Jumping
 		if (Input.GetButtonDown ("AButton_P1")) 
 		{
@@ -165,48 +166,53 @@ public class IYHFusionPlayer : MonoBehaviour {
 					modY = 0;
 				}
 				Vector3 direction = new Vector3 (modX, modY, 0).normalized;
-				beam = Instantiate (Resources.Load ("Prefabs/Projectiles/SoloBeamPrefab")) as GameObject;
-				beam.GetComponent<Beams> ().modPos = new Vector3 (modX, modY, 0).normalized;
-				beam.transform.position = transform.position + beam.GetComponent<Beams> ().modPos;
-				beam.GetComponent<Beams> ().owner = 1;
-				beam.GetComponent<Beams> ().dir = direction;
-				beam.GetComponent<SpriteRenderer> ().color = player1Color;
-				startShotDelay (1);
+				bool harmony = false;
+				if (player2InControl) {
+					harmony = true;
+				} else {
+					harmony = false;
+				}
+				fireProjectile (1, modX, modY, direction, harmony);
 			}
 		}
 
 		//Unfusing
-		if (Input.GetAxis ("RTrigger_P1") == 1) 
-		{
-			p1TryingToUnfuse = true;	
+		if (player2InControl == false) {
+			if (Input.GetAxis ("RTrigger_P1") == 1) {
+				p1TryingToUnfuse = true;
+				if (Input.GetAxis ("RTrigger_P2") == 1) {
+					p2TryingToUnfuse = true;
+				}
+			} else {
+				p1TryingToUnfuse = false;
+				p2TryingToUnfuse = false;
+			}
 		} 
 		else 
 		{
-			p1TryingToUnfuse = false;
+			if (Input.GetAxis ("RTrigger_P1") == 1) {
+				p1TryingToUnfuse = true; 
+			} else {
+				p1TryingToUnfuse = false;
+			}
 		}
 	}
 
 	void player2Inputs ()
 	{
-		if (Input.GetButtonDown ("AButton_P2"))
-		{
-			if (touchingGround) 
-			{
+		if (Input.GetButtonDown ("AButton_P2")) {
+			if (touchingGround) {
 				jump (jumpSpeed);
-			} 
-			else if (touchingGround == false && player2airActions > 0) 
-			{
+			} else if (touchingGround == false && player2airActions > 0) {
 				jump (jumpSpeed * .85f); 
 				player2airActions--;
 			}
 		}
 
-		if (Input.GetButtonDown ("BButton_P2"))  
-		{
+		if (Input.GetButtonDown ("BButton_P2")) {
 			if (p2CanShoot) {
 				float modX = player2StickX;
 				float modY = player2StickY * -1;
-				GameObject beam = null; 
 				if (modX == 0 && modY == 0) {
 					modX = directionModifier;
 				}
@@ -215,55 +221,40 @@ public class IYHFusionPlayer : MonoBehaviour {
 					modY = 0;
 				}
 				Vector3 direction = new Vector3 (modX, modY, 0).normalized;
-				beam = Instantiate (Resources.Load ("Prefabs/Projectiles/SoloBeamPrefab")) as GameObject;
-				beam.GetComponent<Beams> ().modPos = new Vector3 (modX, modY, 0).normalized;
-				beam.transform.position = transform.position + beam.GetComponent<Beams> ().modPos;
-				beam.GetComponent<Beams> ().owner = 2;
-				beam.GetComponent<Beams> ().dir = direction;
-				beam.GetComponent<SpriteRenderer> ().color = player2Color; 
-				startShotDelay (2);
+				bool harmony = false;
+				if (player1InControl) {
+					harmony = true;
+				} else {
+					harmony = false;
+				}
+				fireProjectile (2, modX, modY, direction, harmony);
 			}
 
 		}
 
-		if (Input.GetAxis ("RTrigger_P2") == 1) 
-		{
-			p2TryingToUnfuse = true;	
+		if (player1InControl == false) {
+			if (Input.GetAxis ("RTrigger_P2") == 1) {
+				p2TryingToUnfuse = true;
+				if (Input.GetAxis ("RTrigger_P1") == 1) {
+					p1TryingToUnfuse = true;
+				}
+			} else {
+				p1TryingToUnfuse = false;
+				p2TryingToUnfuse = false;
+			}
 		} 
 		else 
 		{
-			p2TryingToUnfuse = false;
+			if (Input.GetAxis ("RTrigger_P2") == 1) { 
+				p2TryingToUnfuse = true; 
+			} else {
+				p2TryingToUnfuse = false;
+			}
 		}
 	}
 
 	void harmony ()
 	{
-		//Projectile Attack
-		if (overlapping == true) {
-			if (Input.GetButtonDown ("BButton_P1") || (Input.GetButtonDown ("BButton_P2"))) {
-				if (fusionCanShoot) {
-					float modX = stickPosX;
-					float modY = stickPosY * -1;
-					GameObject beam = null; 
-					if (modX == 0 && modY == 0) {
-						modX = directionModifier;
-					}
-					if (modY < 0 && touchingGround == true) {
-						modX = directionModifier;
-						modY = 0;
-					}
-					Vector3 direction = new Vector3 (modX, modY, 0).normalized;
-					beam = Instantiate (Resources.Load ("Prefabs/Projectiles/SoloBeamPrefab")) as GameObject;
-					beam.GetComponent<Beams> ().modPos = new Vector3 (modX, modY, 0).normalized;
-					beam.transform.position = transform.position + beam.GetComponent<Beams> ().modPos;
-					beam.GetComponent<Beams> ().owner = 3;
-					beam.GetComponent<Beams> ().dir = direction;
-					beam.GetComponent<SpriteRenderer> ().color = fusionColor;
-					beam.transform.localScale = beam.transform.localScale * 2;
-					startShotDelay (3);  
-				}
-			}
-		}
 		//Super Jump
 		if (Input.GetButtonDown ("AButton_P1") && Input.GetButtonDown ("AButton_P2"))   
 		{
@@ -365,7 +356,7 @@ public class IYHFusionPlayer : MonoBehaviour {
 		if (p1TryingToUnfuse == true && p2TryingToUnfuse == true) {
 			separationCountDown--;
 		} else {
-			separationCountDown = 60f;
+			separationCountDown = maxSeparationCountDown;
 		}
 
 		if (separationCountDown <= 0) 
@@ -390,6 +381,33 @@ public class IYHFusionPlayer : MonoBehaviour {
 	public void jump (float jumpNum) 
 	{
 		rb.velocity = new Vector2 (rb.velocity.x, jumpNum); 
+	}
+
+	public void fireProjectile (int owner, float modX, float modY,  Vector3 dir, bool harmony)
+	{
+		Color thisColor = Color.white;
+		if (harmony) {
+			thisColor = fusionColor;
+		} else {
+			if (owner == 1) {
+				thisColor = player1Color;
+			}
+			if (owner == 2) {
+				thisColor = player2Color;
+			}
+		}
+		GameObject beam = null; 
+		beam = Instantiate (Resources.Load ("Prefabs/Projectiles/SoloBeamPrefab")) as GameObject;
+		beam.GetComponent<Beams> ().modPos = new Vector3 (modX, modY, 0).normalized;
+		beam.transform.position = transform.position + beam.GetComponent<Beams> ().modPos;
+		beam.transform.localScale = new Vector3 (
+			beam.transform.localScale.x * 2,
+			beam.transform.localScale.y * 2,
+			beam.transform.localScale.z * 2);
+		beam.GetComponent<Beams> ().owner = owner;
+		beam.GetComponent<Beams> ().dir = dir;
+		beam.GetComponent<SpriteRenderer> ().color = thisColor;  
+		startShotDelay (owner);
 	}
 
 	void OnCollisionEnter2D (Collision2D coll)
@@ -442,16 +460,6 @@ public class IYHFusionPlayer : MonoBehaviour {
 		{
 			p2CanShoot = true;
 		}
-
-		if (fusionCanShoot == false) 
-		{
-			fusionCurrenShotDelay++;
-		}
-
-		if (fusionCurrenShotDelay >= fusionShotDelay)
-		{
-			fusionCanShoot = true;
-		}
 	}
 
 
@@ -466,12 +474,6 @@ public class IYHFusionPlayer : MonoBehaviour {
 		{
 			p2CurrentShotDelay = 0;
 			p2CanShoot = false;
-		}
-
-		if (sent == 3) 
-		{
-			fusionCurrenShotDelay = 0;
-			fusionCanShoot = false; 
 		}
 	}
 
@@ -569,10 +571,13 @@ public class IYHFusionPlayer : MonoBehaviour {
 		} else {
 			if (player1InControl && player2InControl == false) {
 				sr.color = player1Color;
+				sr.sprite = p1Sprite;
 			} else if (player2InControl && player1InControl == false) {
 				sr.color = player2Color;
+				sr.sprite = p2Sprite;
 			} else {
 				sr.color = fusionColor;
+				sr.sprite = harmonySprite;
 			}
 		}
 		p1GetOut = Color.Lerp(player1Color, fusionColor, Mathf.PingPong(Time.time*lerpSpeed, 1)); 

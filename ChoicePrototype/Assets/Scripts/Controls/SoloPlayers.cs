@@ -10,7 +10,8 @@ public class SoloPlayers : MonoBehaviour {
 	public int playerNum;
 	public float HP;
 	public float maxHP;
-	public bool recovering = true;
+	public bool hit;
+	public bool recovering;
 	public float hitDuration;
 	public float maxHitDuration;
 	public float moveSpeed;
@@ -211,6 +212,7 @@ public class SoloPlayers : MonoBehaviour {
 	{
 		HP = HP - damage; 
 		hitDuration = 0;
+		hit = true;
 		recovering = false;
 	}
 
@@ -299,9 +301,10 @@ public class SoloPlayers : MonoBehaviour {
 		{
 			HP = 0;
 		}
-		if (HP > maxHP) 
+		if (HP >= maxHP) 
 		{
 			HP = maxHP;
+			recovering = false;
 		}
 		if (HP == 0) 
 		{
@@ -318,7 +321,8 @@ public class SoloPlayers : MonoBehaviour {
 		if (recovering) {
 			HP = HP + 0.5f;
 		} 
-		else 
+
+		if (hit) 
 		{
 			hitDuration++;
 		}
@@ -326,6 +330,7 @@ public class SoloPlayers : MonoBehaviour {
 		if (hitDuration >= maxHitDuration) 
 		{
 			hitDuration = maxHitDuration;
+			hit = false;
 			recovering = true;
 		}
 			

@@ -27,19 +27,27 @@ public class GameManager : MonoBehaviour {
 		{
 			fusion.SetActive (true);
 		}
-		fusion.transform.position = pos;
+		fusion.transform.position = pos; 
 		Camera.main.GetComponent<DynamicCamera> ().fused = true;
 	}
 
 	public void defuse (Vector3 p1Pos, Vector3 p2Pos)
 	{
+		fusion.GetComponent<IYHFusionPlayer> ().separationCountDown = fusion.GetComponent<IYHFusionPlayer> ().maxSeparationCountDown;
 		fusion.SetActive (false);
-		fusion.GetComponent<IYHFusionPlayer> ().separationCountDown = 60;
 		Camera.main.GetComponent<DynamicCamera> ().fused = false;
 		p1.SetActive (true);
 		p1.transform.position = p1Pos;
 		p2.SetActive (true);
 		p2.transform.position = p2Pos;
+		SoloPlayers p1SP = p1.GetComponent<SoloPlayers> ();
+		SoloPlayers p2SP = p2.GetComponent<SoloPlayers> ();
+		p1SP.actionable = true;
+		p1SP.incapacitated = false;
+		p1SP.HP = p1SP.maxHP;
+		p2SP.actionable = true;
+		p2SP.incapacitated = false;
+		p2SP.HP = p1SP.maxHP;
 
 	}
 
