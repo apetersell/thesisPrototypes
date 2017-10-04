@@ -150,11 +150,64 @@ Prefab:
     - target: {fileID: 114695025970345830, guid: 10917eaa3145e45e39c063af2991b16e,
         type: 2}
       propertyPath: maxSeparationCountDown
-      value: 60
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1604027575111650, guid: 10917eaa3145e45e39c063af2991b16e, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114695025970345830, guid: 10917eaa3145e45e39c063af2991b16e,
+        type: 2}
+      propertyPath: p1Sprite
+      value: 
+      objectReference: {fileID: 21300002, guid: a0860c1c0a2ed416facc3d29dce70936,
+        type: 3}
+    - target: {fileID: 114695025970345830, guid: 10917eaa3145e45e39c063af2991b16e,
+        type: 2}
+      propertyPath: p2Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a0860c1c0a2ed416facc3d29dce70936,
+        type: 3}
+    - target: {fileID: 114695025970345830, guid: 10917eaa3145e45e39c063af2991b16e,
+        type: 2}
+      propertyPath: harmonySprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 644d57e7e8c304dfdb76b9673609654a,
+        type: 3}
+    - target: {fileID: 114695025970345830, guid: 10917eaa3145e45e39c063af2991b16e,
+        type: 2}
+      propertyPath: separationCountDown
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114695025970345830, guid: 10917eaa3145e45e39c063af2991b16e,
+        type: 2}
+      propertyPath: p1CurrentShotDelay
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114695025970345830, guid: 10917eaa3145e45e39c063af2991b16e,
+        type: 2}
+      propertyPath: p2CurrentShotDelay
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114695025970345830, guid: 10917eaa3145e45e39c063af2991b16e,
+        type: 2}
+      propertyPath: fusionCurrenShotDelay
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114695025970345830, guid: 10917eaa3145e45e39c063af2991b16e,
+        type: 2}
+      propertyPath: p1ShotDelay
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114695025970345830, guid: 10917eaa3145e45e39c063af2991b16e,
+        type: 2}
+      propertyPath: p2ShotDelay
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114695025970345830, guid: 10917eaa3145e45e39c063af2991b16e,
+        type: 2}
+      propertyPath: fusionShotDelay
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10917eaa3145e45e39c063af2991b16e, type: 2}
@@ -640,6 +693,16 @@ Prefab:
       propertyPath: otherColor.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114527192680920616, guid: b8f1cfacd387a47968268636414c509c,
+        type: 2}
+      propertyPath: currentShotDelay
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114527192680920616, guid: b8f1cfacd387a47968268636414c509c,
+        type: 2}
+      propertyPath: shotDelay
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b8f1cfacd387a47968268636414c509c, type: 2}
   m_IsPrefabParent: 0
@@ -1027,6 +1090,16 @@ Prefab:
         type: 2}
       propertyPath: otherColor.a
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114426877358075550, guid: b904ae17322bf47bfbbe9f8eb99ffffd,
+        type: 2}
+      propertyPath: currentShotDelay
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114426877358075550, guid: b904ae17322bf47bfbbe9f8eb99ffffd,
+        type: 2}
+      propertyPath: shotDelay
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b904ae17322bf47bfbbe9f8eb99ffffd, type: 2}
