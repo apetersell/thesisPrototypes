@@ -56,6 +56,7 @@ public class RealWorldCharacter : MonoBehaviour {
 	public GameObject B; 
 	public GameObject X;
 	public GameObject Y; 
+	public GameObject IYH;
 	public Text textBoxText;
 	Text AText;
 	Text BText;
@@ -76,6 +77,11 @@ public class RealWorldCharacter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (IYH.activeSelf) {
+			actionable = false;
+		} else {
+			actionable = true;
+		}
 		if (keyBoard) {
 			player1MovementX = "Horizontal_P1";
 			player1MovementY = "Vertical_P1";
@@ -308,6 +314,7 @@ public class RealWorldCharacter : MonoBehaviour {
 		if (interacting)
 		{
 			myCanvas.SetActive (true);
+			rb.velocity = Vector3.zero;
 
 		} 
 		else 

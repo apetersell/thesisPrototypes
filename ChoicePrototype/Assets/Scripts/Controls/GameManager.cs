@@ -6,15 +6,29 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	public GameObject fusion;
+	IYHFusionPlayer fusionPlayer; 
 	public GameObject p1;
 	public GameObject p2;
+	public RealWorldCharacter cat;
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+		fusionPlayer = fusion.GetComponent<IYHFusionPlayer> ();
+
+		if (fusionPlayer.player1InControl) {
+			cat.player1InControl = true;
+		} else {
+			cat.player1InControl = false;
+		}
+
+		if (fusionPlayer.player2InControl) {
+			cat.player2InControl = true;
+		} else {
+			cat.player2InControl = false;
+		}
 	}
 
 	public void createFusion (Vector3 pos)
@@ -35,7 +49,7 @@ public class GameManager : MonoBehaviour {
 	{
 		fusion.GetComponent<IYHFusionPlayer> ().separationCountDown = fusion.GetComponent<IYHFusionPlayer> ().maxSeparationCountDown;
 		fusion.SetActive (false);
-		Camera.main.GetComponent<DynamicCamera> ().fused = false;
+//		Camera.main.GetComponent<DynamicCamera> ().fused = false;
 		p1.SetActive (true);
 		p1.transform.position = p1Pos;
 		p2.SetActive (true);

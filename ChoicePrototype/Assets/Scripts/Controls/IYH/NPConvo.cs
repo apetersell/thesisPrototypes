@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestionInteractable : SimpleInteractable {
+public class NPConvo : QuestionInteractable {
+	
+	public bool bigDecision;
+	public int IYHAppears;
+	public string[] NPCLines;
+	public string[] NPCAltLines;
+	public string[] speakerIndex;
 
-	public string [] AOptions;
-	public int[] AAnswers;
-	public string[] BOptions;
-	public int [] BAnswers;
-	public string [] XOptions;
-	public int [] XAnswers;
-	public string [] YOptions;
-	public int [] YAnswers;
-	public string[] answers;
-	public int [] questionLines;
-	public int questionIndicator = 0;
+	public override void Start ()
+	{
+		base.Start ();
+	}
+
+	public override void Update ()
+	{
+		base.Update ();
+	}
 
 	public override void doInteraction(string input)
 	{
@@ -23,14 +27,22 @@ public class QuestionInteractable : SimpleInteractable {
 			if (character.deciding == false) {
 				if (currentLine <= dialougeLines.Length - 1) {
 					if (questionLines [questionIndicator] == currentLine) {
-						character.deciding = true;
-						character.speaking = false;
-						sendQuestion ();
+						if (bigDecision && currentLine == IYHAppears) 
+						{
+							character.deciding = true;
+							character.speaking = false;
+							sendQuestion ();
+							character.IYH.SetActive (true);
+						} 
+						else {
+							character.deciding = true;
+							character.speaking = false;
+							sendQuestion ();
+						}
 					} else {
 						sayLine (currentLine);
 						beingInteractedWith = true;
 						character.interacting = true;
-						character.speaking = true;
 					}
 				} else {
 					endInteraction ();
@@ -61,18 +73,44 @@ public class QuestionInteractable : SimpleInteractable {
 		}
 	}
 
-	public virtual void answerQuestion (int num)
+	public override void sayLine (int num)
 	{
+		NPC npc = GetComponent<NPC> ();
+		if (speakerIndex [num] == "Player") 
+		{
+			character.speaking = true; 
+			npc.speaking = false;
+			character.currentlySaying = dialougeLines [num];
+		}
+
+		if (speakerIndex [num] == "NPC") 
+		{
+			character.speaking = false; 
+			npc.speaking = true;
+			npc.currentlySaying = NPCLines [num];
+		}
+		currentLine++;
+	}
+
+	public override void answerQuestion (int num)
+	{
+		NPC npc = GetComponent<NPC> ();
+		npc.speaking = false;
 		character.currentlySaying = answers[num];
 		character.AOption = null;
 		character.BOption = null;
 		character.XOption = null;
 		character.YOption = null;
 		character.deciding = false;
+		if (num == BAnswers [questionIndicator]) 
+		{
+			NPCLines [4] = NPCAltLines [4];
+			NPCLines [5] = NPCAltLines [5];
+		}
 		currentLine++;
 	}
 
-	public virtual void sendQuestion ()
+	public override void sendQuestion ()
 	{
 		character.AOption = AOptions [questionIndicator];
 		character.BOption = BOptions [questionIndicator]; 
@@ -81,8 +119,15 @@ public class QuestionInteractable : SimpleInteractable {
 		character.deciding = true;
 	}
 
+	public override void doThing ()
+	{
+		
+	}
+
 	public override void endInteraction ()
 	{
+		NPC npc = GetComponent<NPC> ();
+		npc.speaking = false;
 		beingInteractedWith = false;
 		character.interacting = false;
 		character.speaking = false;
@@ -94,12 +139,6 @@ public class QuestionInteractable : SimpleInteractable {
 		{
 			currentLine = 0;
 		}
-		doThing ();
-	}
-
-	public virtual void doThing()
-	{
-		Destroy (this.gameObject);
 	}
 	
 }

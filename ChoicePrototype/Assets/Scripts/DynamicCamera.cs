@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DynamicCamera : MonoBehaviour {
 
+	public bool IYH;
 	public GameObject player1;
 	public GameObject player2;
 	public GameObject fusion;
@@ -17,6 +18,8 @@ public class DynamicCamera : MonoBehaviour {
 	public float upperLimit;
 	public float lowerLimit;
 	public Vector3 midpoint;
+	public bool hasOffset;
+	public Vector2 offset;
 
 
 	// Use this for initialization
@@ -29,7 +32,7 @@ public class DynamicCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		fusion = GameObject.Find ("FusionPlayer");
+//		fusion = GameObject.Find ("FusionPlayer");
 		if (fused == false) {
 			Camera.main.orthographicSize = camZoom;
 			midpoint = ((player1.transform.position - player2.transform.position) * 0.5f) + player2.transform.position;
@@ -62,7 +65,11 @@ public class DynamicCamera : MonoBehaviour {
 			}
 		} else 
 		{
-			Camera.main.transform.position = new Vector3 (fusion.transform.position.x, fusion.transform.position.y, camZ);
+			if (hasOffset) {
+				Camera.main.transform.position = new Vector3 (fusion.transform.position.x + offset.x, fusion.transform.position.y + offset.y, camZ);
+			} else {
+				Camera.main.transform.position = new Vector3 (fusion.transform.position.x, fusion.transform.position.y, camZ);
+			}
 		}
 	}
 }
