@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: f57cb22c806034718b77095358fd3338
+timeCreated: 1507162375
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Nervous Rex
+  fontNames:
+  - Nervous Rex
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
